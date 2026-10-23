@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>College Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #172036;
+      --paper: #f7f6f2;
+      --muted: #55607a;
+      --line: #dcd9cf;
+      --accent: #1f6f5c;
+      --accent-ink: #ffffff;
+      --hover: #ecebe4;
+      --display: "Bricolage Grotesque", system-ui, sans-serif;
+      --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --ink: #eceae2;
+        --paper: #141a26;
+        --muted: #a2abc0;
+        --line: #2d3650;
+        --accent: #4cc2a2;
+        --accent-ink: #0d1a16;
+        --hover: #1c2436;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
+      padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    .brand { padding: 24px 0; font-family: var(--display); font-weight: 700; font-size: 1.05rem; border-bottom: 1px solid var(--line); }
+    h1 {
