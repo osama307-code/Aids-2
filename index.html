@@ -44,3 +44,99 @@
     .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
     .brand { padding: 24px 0; font-family: var(--display); font-weight: 700; font-size: 1.05rem; border-bottom: 1px solid var(--line); }
     h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(2.2rem, 7vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 56px 0 16px;
+      max-width: 14ch;
+    }
+    .lead { color: var(--muted); font-size: 1.1rem; max-width: 46ch; margin: 0 0 32px; }
+    .open {
+      font: 700 1rem var(--body);
+      background: var(--accent);
+      color: var(--accent-ink);
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 26px;
+      cursor: pointer;
+    }
+    .open:focus-visible, .topic:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    h2 { font-family: var(--display); font-size: 1.3rem; margin: 64px 0 8px; }
+    .topics { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .topic {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      width: 100%; text-align: left;
+      background: none; border: 0; border-bottom: 1px solid var(--line);
+      padding: 18px 4px; color: inherit; font: inherit; cursor: pointer;
+      transition: background .15s;
+    }
+    .topic:hover { background: var(--hover); }
+    .topic strong { font-family: var(--display); font-size: 1.15rem; }
+    .topic span { color: var(--muted); font-size: .95rem; text-align: right; }
+    footer { margin-top: 72px; padding: 24px 0 120px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    @media (max-width: 520px) {
+      .topic { flex-direction: column; gap: 2px; }
+      .topic span { text-align: left; }
+    }
+
+    /* Chatbot theme */
+    df-messenger {
+      --df-messenger-font-color: #172036;
+      --df-messenger-font-family: system-ui, sans-serif;
+      --df-messenger-chat-background: #f7f6f2;
+      --df-messenger-message-user-background: #1f6f5c;
+      --df-messenger-message-user-font-color: #ffffff;
+      --df-messenger-message-bot-background: #ffffff;
+      --df-messenger-button-titlebar-color: #1f6f5c;
+      --df-messenger-button-titlebar-font-color: #ffffff;
+      --df-messenger-chat-window-border-radius: 16px;
+      --df-messenger-send-icon: #1f6f5c;
+      --df-messenger-minimized-chat-close-icon-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Your College Name</div>
+
+    <h1>Got a college question? Ask here.</h1>
+    <p class="lead">Get quick answers on admissions, fees, exams, timetable and hostel, any time of day.</p>
+    <button class="open" id="openChat" type="button">Start chat</button>
+
+    <h2>Popular topics</h2>
+    <ul class="topics">
+      <li><button class="topic" type="button" data-q="Tell me about admissions"><strong>Admissions</strong><span>Eligibility, last dates, documents</span></button></li>
+      <li><button class="topic" type="button" data-q="What are the fees?"><strong>Fees</strong><span>Course fees and payment options</span></button></li>
+      <li><button class="topic" type="button" data-q="When are the exams?"><strong>Exams</strong><span>Schedule, results, rules</span></button></li>
+      <li><button class="topic" type="button" data-q="Show me the timetable"><strong>Timetable</strong><span>Class timings by course</span></button></li>
+      <li><button class="topic" type="button" data-q="Tell me about the hostel"><strong>Hostel</strong><span>Rooms, rules, charges</span></button></li>
+    </ul>
+
+    <footer>Your College Name</footer>
+  </div>
+
+  <!-- Dialogflow chatbot: keep this inside <body>, at the end -->
+  <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  <df-messenger
+    intent="WELCOME"
+    chat-title="College_Assistance_Chatbot"
+    agent-id="9b0f0fd0-786c-4b0b-a7c0-47b2353c8ced"
+    language-code="en"
+  ></df-messenger>
+
+  <script>
+    const bot = document.querySelector('df-messenger');
+    function openBot(q) {
+      try {
+        if (bot.showMinChat) bot.showMinChat();
+        if (q && bot.sendQuery) setTimeout(() => bot.sendQuery(q), 400);
+      } catch (e) { console.warn('Chatbot not ready yet', e); }
+    }
+    document.getElementById('openChat').addEventListener('click', () => openBot());
+    document.querySelectorAll('.topic').forEach(b =>
+      b.addEventListener('click', () => openBot(b.dataset.q)));
+  </script>
+</body>
+</html>
